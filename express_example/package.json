@@ -1,0 +1,14 @@
+{
+  "name": "express_example",
+  "version": "1.0.0",
+  "description": "Learning all about express",
+  "main": "app.js",
+  "scripts": {
+    "test": "hello"
+  },
+  "author": "Mel Alrajhi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
