@@ -70,3 +70,42 @@ eventEmitter.emit('connection');
 eventListeners = require('events').EventEmitter.listenerCount(eventEmitter,'connection');
 console.log(eventListeners + " Listner(s) listening to connection event");
 
+/*
+	Buffer concepts
+	http://www.tutorialspoint.com/nodejs/nodejs_buffers.htm
+*/
+
+buf = new Buffer(256);
+len = buf.write("Simply Easy Learning");
+
+console.log("Octets written : "+  len);
+
+/*
+	Streams
+*/
+
+var readerStream = fs.createReadStream('fgl.txt'),
+	data         = '';
+
+readerStream.setEncoding('UTF8');
+
+readerStream.on('data', function(chunk) {
+	// assuming the data won't come in at once
+	data += chunk;
+});
+
+readerStream.on('end',function(){
+   console.log(data);
+});
+
+readerStream.on('error', function(err){
+   console.log(err.stack);
+});
+
+// Pipe stream
+var rs = fs.createReadStream('fgl.txt'),
+	ws = fs.createWriteStream('fgl-out.txt');
+
+// Pipe the read and write operations
+// read input.txt and write data to output.txt
+rs.pipe(ws);
