@@ -6,7 +6,8 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>	
-    <script src="app.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
   </head>
   <body ng-app="flapperNews">
 
@@ -16,19 +17,9 @@
   	 </div>
   	</div>
 
-	  <form class="post-form" ng-submit="addPost()">
-	  	<h3>Add New Post</h3>
+  	<!-- Inline Templates -->
 
-	  	<div class="form-group">
-		    <input type="text" ng-model="title" placeholder="Title"></input><br>
-		  </div>
-		  <div class="form-group">
-		    <input type="text" ng-model="link" placeholder="Link"></input><br>
-		  </div>
-	    <button type="submit" class="btn btn-primary">Post</button>
-	  </form>
-
-    <br>
+  	<!-- Home -->
 	  <script type="text/ng-template" id="/home.html">
 		  <div class="page-header">
 		    <h1>Flapper News</h1>
@@ -44,7 +35,44 @@
 				  </span>
 				  - upvotes: {{post.upvotes}}
 	    	</span>
+	    	<span>
+	    		<a href="#/posts/{{$index}}">Comments({{post.comments.length}})</a>
+	    	</span>
 	    </div>
+	    <form class="post-form" ng-submit="addPost()">
+		  	<h3>Add New Post</h3>
+
+		  	<div class="form-group">
+			    <input type="text" ng-model="title" placeholder="Title"></input><br>
+			  </div>
+			  <div class="form-group">
+			    <input type="text" ng-model="link" placeholder="Link"></input><br>
+			  </div>
+		    <button type="submit" class="btn btn-primary">Post</button>
+	    </form>
 		</script>
+
+		<!-- Posts -->
+		<script type="text/ng-template" id="/posts.html">
+			<div class="page-header">
+				<h3>
+					<a ng-show="post.link" href="{{post.link}}">
+						{{post.title}}
+					</a>
+					<span ng-hide="post.link">
+						{{post.title}}
+					</span>
+				</h3>
+			</div>
+
+			<div ng-repeat="comment in post.comments | orderBy: '-upvotes'">
+				<span class="glyphicon glyphicon-thumbs-up" ng-click="upVote(comment)"></span>
+				{{comment.upvotes}} - by {{comment.author}}
+				<span class="flapper-post">
+					{{comment.body}}
+				</span>
+			</div>
+		</script>
+
   </body>
 </html>
