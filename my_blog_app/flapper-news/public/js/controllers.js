@@ -10,14 +10,9 @@ function(
 	$scope.posts = posts.posts;
 	$scope.addPost = function(){
 		if($scope.title){
-			$scope.posts.push({
-				title: $scope.title, 
-				link: $scope.link, 
-				upvotes: 0,
-				comments: [
-					{author: 'Brad Paisley', body: 'I cant change the world, baby thats for sure', upvotes: 0},
-					{author: 'Florida Georgia Line', body: 'If I told you I loved you would it make you want to stay?', upvotes: 0}
-				]
+			posts.create({
+				title: $scope.title,
+				link: $scope.link,
 			});
 			$scope.title = '';
 			$scope.link = '';
@@ -25,32 +20,33 @@ function(
 	};
 
 	$scope.upVote = function(post){
-		console.log("Upvote?");
-		post.upvotes += 1;
+		posts.upvote(post);
 	}
 }]);
 
 appController.controller('PostCtrl', [
 	'$scope',
-	'$stateParams',
 	'posts',
+	'post',
 function(
 	$scope,
-	$stateParams,
-	posts
+	posts,
+	post
 ){
-	$scope.post = posts.posts[$stateParams.id];
+	$scope.post = post;
 
 	$scope.upVote = function(comment){
-		comment.upvotes += 1;
+		posts.upvoteComment($scope.post, comment);
 	}
 
 	$scope.addComment = function(){
 		if($scope.body === ''){ return; }
-		$scope.post.comments.push({
+		posts.addComment($scope.post._id, {
 			body: $scope.body,
-			author: 'user',
-			upvotes: 0
+			author: 'user'
+		}).success(function(comment){
+			// update view without reloading page, will persist when reloaded
+			$scope.post.comments.push(comment);
 		});
 		$scope.body = '';
 	}
