@@ -34,7 +34,14 @@ function(
 		}).success(function(data){
 			post.upvotes += 1;
 		});
-	}
+	};
+
+	o.downVote = function(post){
+		return $http.put('/posts/' + post._id + '/downvote')
+			.success(function(data){
+				post.downvotes += 1;
+			})
+	};
 
 	o.get = function(id){
 		return $http.get('posts/' + id).then(function(res){

@@ -25,6 +25,10 @@ function(
 	$scope.upVote = function(post){
 		posts.upvote(post);
 	}
+
+	$scope.downVote = function(post){
+		posts.downVote(post);
+	}
 }]);
 
 appController.controller('PostCtrl', [

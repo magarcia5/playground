@@ -98,6 +98,13 @@ router.put('/posts/:post/comments/:comment/upvote', auth, function(req, res, nex
 	});
 });
 
+router.put('/posts/:post/downvote', function(req, res, next){
+	req.post.downvote(function(err, post){
+		if(err){ return next(err); }
+		return res.json(post);
+	});
+});
+
 // passport
 router.post('/register', function(req, res, next){
 	if(!req.body.username || !req.body.password){
