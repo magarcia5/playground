@@ -89,7 +89,7 @@ function(
 
 		if(token){
 			// don't ask
-			var payload = JSON.parse($window.atob(token.split('-')[1]));
+			var payload = JSON.parse($window.atob(token.split('.')[1]));
 
 			return payload.exp > Date.now() / 1000;
 		} else{
@@ -101,7 +101,7 @@ function(
 		if(auth.isLoggedIn()){
 			var token = auth.getToken();
 
-			var payload = JSON.parse($window.atob(token.split('-')[1]));
+			var payload = JSON.parse($window.atob(token.split('.')[1]));
 			return payload.username;
 		}
 	};
@@ -112,7 +112,7 @@ function(
 		});
 	};
 
-	auth.login = function(){
+	auth.login = function(user){
 		return $http.post('/login', user).success(function(data){
 			auth.saveToken(data.token);
 		});
@@ -153,6 +153,26 @@ function(
 					return posts.get($stateParams.id);
 				}]
 			}
+		})
+		.state('login', {
+			url: '/login',
+			templateUrl: '/login.html',
+			controller: 'AuthCtrl',
+			onEnter: ['$state', 'auth', function($state, auth){
+				if(auth.isLoggedIn()){
+					$state.go('home');
+				}
+			}]
+		})
+		.state('register', {
+			url: '/register',
+			templateUrl: '/register.html',
+			controller: 'AuthCtrl',
+			onEnter: ['$state', 'auth', function($state, auth){
+				if(auth.isLoggedIn()){
+					$state.go('home');
+				}
+			}]
 		});
 
 	$urlRouterProvider.otherwise('home');

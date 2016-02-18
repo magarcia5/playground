@@ -99,7 +99,7 @@ router.put('/posts/:post/comments/:comment/upvote', auth, function(req, res, nex
 });
 
 // passport
-router.post('register', function(req, res, next){
+router.post('/register', function(req, res, next){
 	if(!req.body.username || !req.body.password){
 		return res.status(400).json({message: 'Please fill out all fields'});
 	}
@@ -115,6 +115,7 @@ router.post('register', function(req, res, next){
 });
 
 router.post('/login', function(req, res, next){
+	console.log(req);
 	if(!req.body.username || !req.body.password){
 		return res.status(400).json({message: 'Please fill out all fields'});
 	}
