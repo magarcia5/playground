@@ -3,10 +3,13 @@ var appController = angular.module('appController', []);
 appController.controller('MainCtrl', [
 	'$scope',
 	'posts',
+	'auth',
 function(
 	$scope,
-	posts
+	posts,
+	auth
 ){
+	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.posts = posts.posts;
 	$scope.addPost = function(){
 		if($scope.title){
@@ -28,11 +31,14 @@ appController.controller('PostCtrl', [
 	'$scope',
 	'posts',
 	'post',
+	'auth',
 function(
 	$scope,
 	posts,
-	post
+	post,
+	auth
 ){
+	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.post = post;
 
 	$scope.upVote = function(comment){

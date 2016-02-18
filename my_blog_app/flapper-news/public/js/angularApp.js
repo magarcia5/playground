@@ -5,31 +5,15 @@ var app = angular.module('flapperNews', [
 
 app.factory('posts', [
 	'$http',
+	'auth',
 function(
-	$http
+	$http,
+	auth
 ){
 	var o = {
-		posts: [
-			{
-				title: "This is hilarious!", 
-				link: "https://www.youtube.com/watch?v=SNYOEgMeSvM", 
-				upvotes: 7,
-				comments: [
-					{author: 'Brad Paisley', body: 'I cant change the world, baby thats for sure', upvotes: 0},
-					{author: 'Florida Georgia Line', body: 'If I told you I loved you would it make you want to stay?', upvotes: 0}
-				]
-			},
-			{
-				title: "Superbowl halftime show", 
-				link: "https://www.youtube.com/watch?v=L_Hgh7sPDLM", 
-				upvotes: 11,
-				comments: [
-					{author: 'Muse', body: 'You trick your lovers that youre wicked and divine', upvotes: 0},
-					{author: 'Brett Eldredge', body: 'You make me crazy and I kinda like it', upvotes: 0}
-				]
-			}
-		]
-	}
+		posts: []
+	};
+
 	o.getAll = function(){
 		return $http.get('/posts').success(function(data){
 			angular.copy(data, o.posts);
@@ -37,13 +21,17 @@ function(
 	};
 
 	o.create = function(post){
-		return $http.post('/posts', post).success(function(data){
+		return $http.post('/posts', post, {
+			headers: {Authorization: 'Bearer ' + auth.getToken()}
+		}).success(function(data){
 			o.posts.push(data);
-		})
+		});
 	};
 
 	o.upvote = function(post){
-		return $http.put('/posts/' + post._id + '/upvote').success(function(data){
+		return $http.put('/posts/' + post._id + '/upvote', null, {
+			headers: {Authorization: 'Bearer ' + auth.getToken()}
+		}).success(function(data){
 			post.upvotes += 1;
 		});
 	}
@@ -55,14 +43,19 @@ function(
 	};
 
 	o.addComment = function(id, comment){
-		return $http.post('/posts/' + id + '/comments', comment);
+		return $http.post('/posts/' + id + '/comments', comment, {
+			headers: {Authorization: 'Bearer ' + auth.getToken()}
+		});
 	};
 
 	o.upvoteComment = function(post, comment){
-		return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote')
-			.success(function(data){
-				comment.upvotes += 1;
-			})
+		// adding token to header to tell the client who is writing to application
+		return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null, {
+			headers: {Authorization: 'Bearer ' + auth.getToken()}
+		})
+		.success(function(data){
+			comment.upvotes += 1;
+		});
 	};
 	return o;
 }]);
