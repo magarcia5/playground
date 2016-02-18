@@ -37,7 +37,9 @@ function(
 	};
 
 	o.downVote = function(post){
-		return $http.put('/posts/' + post._id + '/downvote')
+		return $http.put('/posts/' + post._id + '/downvote', null, {
+			headers: {Authorization: 'Bearer ' + auth.getToken()}
+		})
 			.success(function(data){
 				post.downvotes += 1;
 			})

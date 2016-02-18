@@ -98,7 +98,7 @@ router.put('/posts/:post/comments/:comment/upvote', auth, function(req, res, nex
 	});
 });
 
-router.put('/posts/:post/downvote', function(req, res, next){
+router.put('/posts/:post/downvote', auth, function(req, res, next){
 	req.post.downvote(function(err, post){
 		if(err){ return next(err); }
 		return res.json(post);
