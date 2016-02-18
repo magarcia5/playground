@@ -69,9 +69,42 @@ router.get('/posts/:post', function(req, res){
 });
 
 router.put('/posts/:post/upvote', auth, function(req, res, next){
-	req.post.upvote(function(err, post){
+	var user = User.findOne({username: req.payload.username}, function(err, user){
 		if(err){ return next(err); }
-		res.json(post);
+		var isInArray = user.votedOn.some(function (post) {
+    		return post.equals(req.post._id);
+		});
+		if(!isInArray){
+			req.post.upvote(function(err, post){
+				user.votedOn.push(post);
+				user.save(function(err, user){
+					if(err){ return next(err); }
+					res.json(post);
+				});
+			});
+		} else {
+			return res.status(400).json({message: 'You can only vote on a post once.'});
+		}
+	});
+});
+
+router.put('/posts/:post/downvote', auth, function(req, res, next){
+	var user = User.findOne({username: req.payload.username}, function(err, user){
+		if(err){ return next(err); }
+		var isInArray = user.votedOn.some(function (post) {
+    		return post.equals(req.post._id);
+		});
+		if(!isInArray){
+			req.post.downvote(function(err, post){
+				user.votedOn.push(post);
+				user.save(function(err, user){
+					if(err){ return next(err); }
+					res.json(post);
+				});
+			});
+		} else {
+			return res.status(400).json({message: 'You can only vote on a post once.'});
+		}
 	});
 });
 
@@ -95,13 +128,6 @@ router.put('/posts/:post/comments/:comment/upvote', auth, function(req, res, nex
 	req.comment.upvote(function(err, comment){
 		if(err){ return next(err); }
 		res.json(comment);
-	});
-});
-
-router.put('/posts/:post/downvote', auth, function(req, res, next){
-	req.post.downvote(function(err, post){
-		if(err){ return next(err); }
-		return res.json(post);
 	});
 });
 
