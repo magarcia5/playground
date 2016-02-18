@@ -33,7 +33,7 @@
 		  </div>
 		 	<div ng-repeat="post in posts | orderBy: '-upvotes'">
 	    	<span class="glyphicon-thumbs-up glyphicon" ng-click="upVote(post)"></span>
-            <span class="glyphicon-thumbs-down glyphicon" ng-click="downVote(post)"</span>
+            <span class="glyphicon-thumbs-down glyphicon" ng-click="downVote(post)"></span>
 	    	<span class="flapper-post">
 				  <a ng-show="post.link" href="{{post.link}}">
 				    {{post.title}}
