@@ -82,7 +82,7 @@
 
 			<div ng-repeat="comment in post.comments | orderBy: '-upvotes'">
 				<span class="glyphicon glyphicon-thumbs-up" ng-click="upVote(comment)"></span>
-				{{comment.upvotes}} - by {{comment.author}}
+				{{comment.upvotes}} - by {{comment.displayName}}
 				<span class="flapper-post">
 					{{comment.body}}
 				</span>
@@ -94,7 +94,10 @@
             <button type="button" class="btn btn-primary post-button" ng-click="showPost()" ng-show="hidePostForm">Add New Comment</button>
 			<form ng-submit="addComment()" class="post-form" ng-show="isLoggedIn()" ng-hide="hidePostForm">
 				<h3>Add a new Comment</h3>
-				<div>
+                <div>
+                    <input type="text" class="form-control" placeholder="Name (optional)" ng-model="displayName"></input>
+                </div>				
+                <div>
 					<input type="text" class="form-control" placeholder="Comment" ng-model="body"></input>
 				</div>
 				<button type="submit" class="btn btn-primary">Post</button>

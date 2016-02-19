@@ -58,14 +58,17 @@ function(
 
 	$scope.addComment = function(){
 		if($scope.body === ''){ return; }
+
 		posts.addComment($scope.post._id, {
 			body: $scope.body,
-			author: 'user'
+			author: auth.currentUser(),
+			displayName: $scope.displayName || auth.currentUser()
 		}).success(function(comment){
 			// update view without reloading page, will persist when reloaded
 			$scope.post.comments.push(comment);
 		});
 		$scope.body = '';
+		$scope.displayName = '';
 	}
 
 	$scope.showPost = function(){
