@@ -6,3 +6,25 @@ body {
 a {
   color: #00B7FF;
 }
+
+.glyphicon-thumbs-up {
+	cursor:pointer;
+}
+
+.glyphicon-thumbs-down {
+	cursor:pointer;
+}
+
+.flapper-post {
+	font-size: 20px;
+	margin-left: 10px;
+}
+
+.post-form {
+	margin-top: 30px;
+}
+
+.post-button {
+	margin-top: 30px;
+	margin-bottom: 15px;
+}

@@ -11,6 +11,8 @@ function(
 ){
 	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.posts = posts.posts;
+	$scope.hidePostForm = true;
+
 	$scope.addPost = function(){
 		if($scope.title){
 			posts.create({
@@ -29,6 +31,10 @@ function(
 	$scope.downVote = function(post){
 		posts.downVote(post);
 	}
+
+	$scope.showPost = function(){
+		$scope.hidePostForm = false;
+	}
 }]);
 
 appController.controller('PostCtrl', [
@@ -44,6 +50,7 @@ function(
 ){
 	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.post = post;
+	$scope.hidePostForm = true;
 
 	$scope.upVote = function(comment){
 		posts.upvoteComment($scope.post, comment);
@@ -59,6 +66,10 @@ function(
 			$scope.post.comments.push(comment);
 		});
 		$scope.body = '';
+	}
+
+	$scope.showPost = function(){
+		$scope.hidePostForm = false;
 	}
 }]);
 
