@@ -14,13 +14,13 @@ Implemented features include:
 
 ## Prequisites
 
-1. Download and run MongoDB.
+Download and run MongoDB.
 
 ``` 
 brew install mongodb 
 ```
 
-2. Download Node.js.
+Download Node.js.
 
 ``` 
 brew install node 
@@ -28,16 +28,16 @@ brew install node
 
 ## Usage
 
-1. Install node dependencies.
+Install node dependencies.
 
 ``` 
 npm install 
 ```
 
-2. Start the node server.
+Start the node server.
 
 ``` 
 npm start 
 ```
 
-3. Visit the [site](http://localhost:3000/#/home).
+Visit the [site](http://localhost:3000/#/home).
