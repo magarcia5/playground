@@ -10,7 +10,7 @@ Implemented features include:
 * Adding comments
 * Upvoting/downvoting
 * User authentication
-* Peristent storage
+* Peristent storage of posts, comments, and users
 
 ## Prequisites
 
