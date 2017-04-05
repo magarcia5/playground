@@ -17,4 +17,4 @@ $ npm run start
 
 ```
 
-Visit the site at http://127.0.0.1:8080.
+Visit the site at http://127.0.0.1:8080 and http://127.0.0.1:8080/ratefinder.html.
