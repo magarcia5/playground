@@ -1,4 +1,5 @@
 */node_modules/*
 *.log
 .DS_Store
-my_blog_app/flapper-news/node_modules/*
+*/build/*
+
